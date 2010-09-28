@@ -194,12 +194,12 @@ class pib {
 									}
 									else
 									{
-										echo 'Access denied for '.$nickname['host']."\n";
+										echo 'Access denied for '.$this->stored_match['nickname']['host']."\n";
 									}
 								}
 								else
 								{
-									echo 'Access denied for '.$nickname['nick']."\n";
+									echo 'Access denied for '.$this->stored_match['nickname']['nick']."\n";
 								}
 							}
 							else
