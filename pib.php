@@ -54,7 +54,7 @@ class pib {
 	{
 		if($where == '')
 		{
-			$where = ($this->stored_match['buffer']['target'] == $this->pibname ? $this->stored_match['nickname']['nick'] : $this->stored_match['buffer']['target']);
+			$where = ($this->stored_match[0]['buffer']['target'] == $this->pibname ? $this->stored_match[0]['nickname']['nick'] : $this->stored_match[0]['buffer']['target']);
 		}
 		$this->w('PRIVMSG '.$where.' '.shell_exec($what));
 	}
@@ -87,7 +87,7 @@ class pib {
 	{
 		if($where == '')
 		{
-			$where = ($this->stored_match['buffer']['target'] == $this->pibname ? $this->stored_match['nickname']['nick'] : $this->stored_match['buffer']['target']);
+			$where = ($this->stored_match[0]['buffer']['target'] == $this->pibname ? $this->stored_match[0]['nickname']['nick'] : $this->stored_match[0]['buffer']['target']);
 		}
 		$this->w('PRIVMSG '.$where.' '.$what);
 	}
@@ -157,7 +157,7 @@ class pib {
 					case 'PRIVMSG':
 						if(substr($param,0,1) == "~")
 						{
-							$this->stored_match = $match;
+							$this->stored_match[] = $match;
 							$this->w('USERIP '.$nickname['nick']);
 						}
 						if($param == "\001VERSION\001")
@@ -181,12 +181,12 @@ class pib {
 							list(,$nick,$ident,$userip) = $match['userip'];
 							if(in_array($userip,$this->admin['userip']))
 							{
-								if(in_array($this->stored_match['nickname']['nick'],$this->admin['nick']))
+								if(in_array($this->stored_match[0]['nickname']['nick'],$this->admin['nick']))
 								{
-									if(in_array($this->stored_match['nickname']['host'],$this->admin['host']))
+									if(in_array($this->stored_match[0]['nickname']['host'],$this->admin['host']))
 									{
 										ob_start();
-										eval(substr($this->stored_match['buffer']['param'],1));
+										eval(substr($this->stored_match[0]['buffer']['param'],1));
 										$buffered_output = ob_get_contents();
 										ob_end_clean();
 										if($this->output_sent === false)
@@ -194,12 +194,12 @@ class pib {
 									}
 									else
 									{
-										echo 'Access denied for '.$this->stored_match['nickname']['host']."\n";
+										echo 'Access denied for '.$this->stored_match[0]['nickname']['host']."\n";
 									}
 								}
 								else
 								{
-									echo 'Access denied for '.$this->stored_match['nickname']['nick']."\n";
+									echo 'Access denied for '.$this->stored_match[0]['nickname']['nick']."\n";
 								}
 							}
 							else
