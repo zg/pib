@@ -190,7 +190,7 @@ class pib {
 										$buffered_output = ob_get_contents();
 										ob_end_clean();
 										if($this->output_sent === false)
-											$this->out($buffered_output);
+											$this->out((strlen($buffered_output) > 0 ? $buffered_output : 'Empty output.'));
 									}
 									else
 									{
